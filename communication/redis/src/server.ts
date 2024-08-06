@@ -31,6 +31,34 @@ app.post("/students", async (req: any, res: any) => {
     res.json({ message: "internal server error" });
   }
 });
+
+app.post("/put", async (req: any, res: any) => {
+  try {
+    const queueName = req.body.queueName;
+    const body1 = req.body.body1;
+    const res1 = await redisClient.LPUSH(queueName, body1);
+    res.json({ message: "saved data in the queue" });
+  } catch (error) {}
+});
+app.get("/get", async (req: any, res: any) => {
+  try {
+    const queueName = req.body.queueName;
+    const queueTop = await redisClient.RPOP(queueName);
+    res.json({ message: " the data in the que is ", queueTop: queueTop });
+  } catch (error) {
+    console.log(error);
+  }
+});
+app.get("/getqueue", async (req: any, res: any) => {
+  try {
+    const queueName = req.body.queueName;
+    const queueTop = await redisClient.BRPOP(queueName, 0);
+    res.json({ message: " the data in the que is ", queueTop: queueTop });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.get("/student", async (req: any, res: any) => {
   const id = req.body.id;
   try {
@@ -48,6 +76,7 @@ app.get("/student", async (req: any, res: any) => {
       const user = {
         email: res2?.email!,
         name: res2?.name!,
+
         rollno: res2?.rollno!,
         classr: res2?.classr!,
       };

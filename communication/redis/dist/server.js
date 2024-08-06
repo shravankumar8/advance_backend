@@ -40,6 +40,35 @@ app.post("/students", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json({ message: "internal server error" });
     }
 }));
+app.post("/put", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const queueName = req.body.queueName;
+        const body1 = req.body.body1;
+        const res1 = yield redisClient.LPUSH(queueName, body1);
+        res.json({ message: "saved data in the queue" });
+    }
+    catch (error) { }
+}));
+app.get("/get", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const queueName = req.body.queueName;
+        const queueTop = yield redisClient.RPOP(queueName);
+        res.json({ message: " the data in the que is ", queueTop: queueTop });
+    }
+    catch (error) {
+        console.log(error);
+    }
+}));
+app.get("/getqueue", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const queueName = req.body.queueName;
+        const queueTop = yield redisClient.BRPOP(queueName, 0);
+        res.json({ message: " the data in the que is ", queueTop: queueTop });
+    }
+    catch (error) {
+        console.log(error);
+    }
+}));
 app.get("/student", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.body.id;
     try {
