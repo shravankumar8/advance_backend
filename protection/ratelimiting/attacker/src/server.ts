@@ -37,7 +37,7 @@ async function sendRequestsInBatches(batchSize: number) {
     console.log(`Sending request ${i + 1}`);
     await main({
       email: "kumashravan5@gmail.com",
-      password: "cbdadmin@123",
+      password: "kartdefbueif@123",
       otp: i.toString(),
     });
 
